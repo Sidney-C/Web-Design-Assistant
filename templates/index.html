@@ -13,13 +13,26 @@
 			</div>
 		</nav>
 		
-		<form method='POST'>
-		{{nameform.hidden_tag()}}
-		<div class="mb-3">
-		{{nameform.sitename.label}}
-		{{nameform.sitename(class = "form-control")}}
-		</div>
-		{{nameform.submit(class = "btn btn-primary")}}
-		</form>
+		{% if step == 1 %}
+			<form method='POST' action='/'>
+			{{nameform.hidden_tag()}}
+			<div class="mb-3">
+			{{nameform.sitename.label}}
+			{{nameform.sitename(class = "form-control")}}
+			</div>
+			{{nameform.submit(class = "btn btn-primary")}}
+			</form>
+		
+		{% elif step == 2 %}
+			<form method='POST' action='/'>
+			{{nameform.hidden_tag()}}
+			<div class="mb-3">
+			{{nameform.textcontent.label}}
+			{{nameform.textcontent(class = "form-control")}}
+			</div>
+			{{nameform.submit(class = "btn btn-primary")}}
+			</form>
+		
+		{% endif %}
 	</body>
 </html>
