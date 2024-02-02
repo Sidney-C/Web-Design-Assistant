@@ -7,5 +7,19 @@
 		<title></title>
 	</head>
 	<body>
+		<nav class="navbar" style="background-color: #e3f2fd;">
+			<div class="container-fluid">
+				<h3>Web Design Assistant</h3>
+			</div>
+		</nav>
+		
+		<form method='POST'>
+		{{nameform.hidden_tag()}}
+		<div class="mb-3">
+		{{nameform.sitename.label}}
+		{{nameform.sitename(class = "form-control")}}
+		</div>
+		{{nameform.submit(class = "btn btn-primary")}}
+		</form>
 	</body>
 </html>
