@@ -9,28 +9,11 @@
 	<body>
 		<nav class="navbar" style="background-color: #e3f2fd;">
 			<div class="container-fluid">
-				<h3>Web Design Assistant</h3>
+				<h3>Working?</h3>
 			</div>
 		</nav>
-		
-		<form method='POST' action='/'>
-			{{nameform.hidden_tag()}}
-			
-			{% if step == 1 %}
-				<div class="mb-3">
-					{{nameform.sitename.label}}
-					{{nameform.sitename(class = "form-control")}}
-				</div>
-			
-			{% elif step == 2 %}
-				<div class="mb-3">
-					{{nameform.textcontent.label}}
-					{{nameform.textcontent(class = "form-control")}}
-				</div>
-			{% endif %}
-
-			{{nameform.submit(class = "btn btn-primary")}}
-		</form>
-		
+		<div>
+			<p>Working!</p>
+		</div>
 	</body>
 </html>
