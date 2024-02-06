@@ -13,8 +13,12 @@
 			</div>
 		</nav>
 		
-		<form method='POST' action='/'>
+		<form method='POST' action='/' target='_blank'>
 			{{nameform.hidden_tag()}}
+			<div class="mb-3">
+				{{nameform.urlname.label}}
+				{{nameform.urlname(class = "form-control")}}
+			</div>
 			<div class="mb-3">
 				{{nameform.sitename.label}}
 				{{nameform.sitename(class = "form-control")}}
