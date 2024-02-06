@@ -44,6 +44,7 @@ def showcode():
     findbrowser = request.user_agent.string
     browser = parse(findbrowser)
     browsername = browser.browser.family
+    #print(f"Browser: {browsername}")
 
     return render_template('showcode.html', browsername=browsername)
 
