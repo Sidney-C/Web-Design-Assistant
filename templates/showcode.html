@@ -12,13 +12,37 @@
 				<h3>Web Design Assistant</h3>
 			</div>
 		</nav>
-		<p>We have detected that you are using <strong>{{browsername}}</strong>.</p>
-		<p>To download the source code for your website:</p>
-		<ol>
-			<li>Return to the tab in which your website is open.</li>
-			<li>Right-click on any empty space on the page.</li>
-			<li>Select "View page source" from the dropdown menu</li>
-			<li>You will see your source code in a new tab. You can now copy and paste it.</li>
-		</ol>
+		<div>
+			{%if browsername == "Edge"%}
+				<p>We have detected that you are using <strong>Edge</strong>.</p>
+				<p>To download the source code for your website:</p>
+				<ol>
+					<li>Return to the tab in which your website is open.</li>
+					<li>Right-click on any empty space on the page.</li>
+					<li>Select "View page source" from the dropdown menu</li>
+					<li>You will see your source code in a new tab. You can now copy and paste it.</li>
+				</ol>
+			{%elif browsername == "Firefox"%}
+				<p>We have detected that you are using <strong>Firefox</strong>.</p>
+				<p>To download the source code for your website:</p>
+				<ol>
+					<li>Return to the tab in which your website is open.</li>
+					<li>Right-click on any empty space on the page.</li>
+					<li>Select "View Page Source" from the dropdown menu</li>
+					<li>You will see your source code in a new tab. You can now copy and paste it.</li>
+				</ol>
+			{%elif browsername == "Chrome"%}
+				<p>We have detected that you are using <strong>Chrome</strong>.</p>
+				<p>To download the source code for your website:</p>
+				<ol>
+					<li>Return to the tab in which your website is open.</li>
+					<li>Right-click on any empty space on the page.</li>
+					<li>Select "View page source" from the dropdown menu</li>
+					<li>You will see your source code in a new tab. You can now copy and paste it.</li>
+				</ol>
+			{%else%}
+				<p>An error has occured and we were unable to detect which browser you are using.</p>
+			{%endif%}
+		</div>
 	</body>
 </html>
