@@ -16,6 +16,10 @@
 		<form method='POST' action='/'>
 			{{nameform.hidden_tag()}}
 			<div class="mb-3">
+				{{nameform.urlname.label}}
+				{{nameform.urlname(class = "form-control")}}
+			</div>
+			<div class="mb-3">
 				{{nameform.sitename.label}}
 				{{nameform.sitename(class = "form-control")}}
 			</div>

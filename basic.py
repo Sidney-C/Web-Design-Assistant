@@ -7,7 +7,10 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
 
+pageassets = {}
+
 class NameForm(FlaskForm):
+    urlname = StringField('Enter URL *', [validators.DataRequired()])
     sitename = StringField('Enter the name of your website *', [validators.DataRequired()])
     textcontent = TextAreaField('Enter the text for the first section of your website *', [validators.DataRequired()])
     textcontent2 = TextAreaField('If you would like a second section, enter the text here')
@@ -18,9 +21,12 @@ def index():
     sitename = False
     textcontent = False
     textcontent2 = False
+    urlname = False
     nameform = NameForm()
 
     if nameform.validate_on_submit():
+        session['url'] = nameform.urlname.data
+        nameform.urlname.data =''
         session['sitename'] = nameform.sitename.data
         nameform.sitename.data = ''
         #print(f"Step 1: {sitename}")
@@ -29,7 +35,11 @@ def index():
         #print(f"Step 2: {textcontent}")
         session['textcontent2'] = nameform.textcontent2.data
         nameform.textcontent2.data = ''
-        return redirect(url_for('yourwebsite'))
+        #yoururl = session['url']
+        assetlist = [session['sitename'], session['textcontent'], session['textcontent2']]
+        pageassets[session['url']] = assetlist
+        #print(pageassets)
+        return redirect(url_for('newurl', yoururl=session['url']))
 
     return render_template('index.html', nameform=nameform)
 
@@ -37,6 +47,14 @@ def index():
 def yourwebsite():
 
     return render_template('yourwebsite.html')
+
+@app.route('/yourwebsite/<yoururl>')
+def newurl(yoururl):
+
+    print(f"URL: {yoururl}")
+    currentassets = pageassets[yoururl]
+    print(currentassets)
+    return render_template('yourwebsite.html', currentassets = currentassets)
 
 @app.route('/showcode')
 def showcode():
