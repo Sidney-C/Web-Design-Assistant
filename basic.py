@@ -7,6 +7,8 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
 
+pageassets = {}
+
 class NameForm(FlaskForm):
     urlname = StringField('Enter URL *', [validators.DataRequired()])
     sitename = StringField('Enter the name of your website *', [validators.DataRequired()])
@@ -34,6 +36,9 @@ def index():
         session['textcontent2'] = nameform.textcontent2.data
         nameform.textcontent2.data = ''
         #yoururl = session['url']
+        assetlist = [session['sitename'], session['textcontent'], session['textcontent2']]
+        pageassets[session['url']] = assetlist
+        #print(pageassets)
         return redirect(url_for('newurl', yoururl=session['url']))
 
     return render_template('index.html', nameform=nameform)
@@ -47,7 +52,9 @@ def yourwebsite():
 def newurl(yoururl):
 
     print(f"URL: {yoururl}")
-    return render_template('yourwebsite.html')
+    currentassets = pageassets[yoururl]
+    print(currentassets)
+    return render_template('yourwebsite.html', currentassets = currentassets)
 
 @app.route('/showcode')
 def showcode():
