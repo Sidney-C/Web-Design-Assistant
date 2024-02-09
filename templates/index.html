@@ -13,7 +13,7 @@
 			</div>
 		</nav>
 		
-		<form method='POST' action='/'>
+		<form method='POST' enctype="multipart/form-data">
 			{{nameform.hidden_tag()}}
 			<div class="mb-3">
 				{{nameform.urlname.label}}
@@ -30,6 +30,13 @@
 			<div class="mb-3">
 				{{nameform.textcontent2.label}}
 				{{nameform.textcontent2(class = "form-control")}}
+			</div>
+			<div>
+				{{nameform.image.label}}
+				<br>
+				{{nameform.image}}
+				<br>
+				<br>
 			</div>
 			{{nameform.submit(class = "btn btn-primary")}}
 		</form>
