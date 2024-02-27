@@ -9,19 +9,29 @@
 	<body>
 		<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
 			<div class="container-fluid">
-				<h3 class="px-4">{{currentassets[0]}}</h3>
+				<h3 class="px-4">{{websitename}}</h3>
 			</div>
 		</nav>
-			{%for i in range(2, stopnum)%}
-				<div>
-					<p>{{currentassets[i][0]}}</p>
-					{%if not currentassets[i][1] == "no file uploaded"%}
-						<div>
-							<img src="/static/{{currentassets[i][1]}}" alt="Your Image">
-						</div>
-						<br>
-					{%endif%}
-				</div>
-			{%endfor%}
+		<div>
+			<h4>{{currentassets[0]}}</h4>
+		</div>
+		{%for i in range(2, stopnum)%}
+			<div>
+				<p>{{currentassets[i][0]}}</p>
+				{%if not currentassets[i][1] == "no file uploaded"%}
+					<div>
+						<img src="/static/{{currentassets[i][1]}}" alt="Your Image">
+					</div>
+					<br>
+				{%endif%}
+			</div>
+		{%endfor%}
+		<br>
+		<div>
+			<a href='{{url_for('testpage3')}}' target='_blank'>Get instructions to view and save source code</a>
+		</div>
+		<div>
+			<a href='{{url_for('testpage1')}}' target='_blank'>Return to form and add another page</a>
+		</div>
 	</body>
 </html>
