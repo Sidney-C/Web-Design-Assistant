@@ -38,3 +38,6 @@ class NewSection(FlaskForm):
 class AddToNavbar(FlaskForm):
     userinput = RadioField(addtonavbartext, choices=[('Yes', 'Yes'), ('No', 'No')])
     submit = SubmitField(submittext)
+
+class LaunchApp(FlaskForm):
+    submit = SubmitField('Begin')

@@ -22,6 +22,21 @@ websitename = ''
 def checkextension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+@app.route('/')
+def landingpage():
+
+    return redirect(url_for('welcome'))
+
+@app.route('/welcome', methods = ['GET', 'POST'])
+def welcome():
+
+    launchapp = LaunchApp()
+
+    if launchapp.validate_on_submit():
+        return redirect(url_for('testpage1'))
+
+    return render_template('welcome.html', launchapp = launchapp)
+
 @app.route('/testpage1', methods = ['GET', 'POST'])
 def testpage1():
     
@@ -97,11 +112,6 @@ def testpage1():
 def testpage2():
 
     stopnum = session.get('stopnum')
-
-    #filenames = []
-    
-    #for i in range(2, stopnum):
-        #filenames.append(assetlist[i][1])
     
     print(allassets)
     return render_template('testpage2.html', assetlist = assetlist, stopnum = stopnum, websitename = websitename)
@@ -112,19 +122,6 @@ def currentpage(currenturl):
 
     currentassets = allassets[currenturl]
     stopnum = currentassets[-1]
-
-    print('navbarlinks:')
-    print(navbarlinks)
-    print('sitenames:')
-    print(sitenames)
-    print('websitename:')
-    print(websitename)
-    print('allassets:')
-    print(allassets)
-    print('currentassets:')
-    print(currentassets)
-    print('stopnum:')
-    print(stopnum)
     
     return render_template('testpage2.html', currentassets = currentassets, stopnum = stopnum, websitename = websitename)
 
