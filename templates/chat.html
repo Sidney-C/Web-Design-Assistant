@@ -14,38 +14,12 @@
 		</nav>
 		
 		<form method='POST' enctype="multipart/form-data">
-			{{nameform.hidden_tag()}}
+			{{chatbox.hidden_tag()}}
 			<div class="mb-3">
-				{{nameform.urlname.label}}
-				{{nameform.urlname(class = "form-control")}}
+				{{chatbox.userinput.label}}
+				{{chatbox.userinput(class = "form-control")}}
 			</div>
-			<div class="mb-3">
-				{{nameform.sitename.label}}
-				{{nameform.sitename(class = "form-control")}}
-			</div>
-			<div class="mb-3">
-				{{nameform.textcontent.label}}
-				{{nameform.textcontent(class = "form-control")}}
-			</div>
-			<div class="mb-3">
-				{{nameform.textcontent2.label}}
-				{{nameform.textcontent2(class = "form-control")}}
-			</div>
-			<div>
-				{{nameform.addtonavbar.label}}
-				{{nameform.addtonavbar}}
-			</div>
-			<div>
-				{{nameform.image.label}}
-				<br>
-				{{nameform.image}}
-				<br>
-				<br>
-			</div>
-			{{nameform.submit(class = "btn btn-primary")}}
+			{{chatbox.submit(class = "btn btn-primary")}}
 		</form>
-		<br>
-		<p>Required fields are indicated with a (*)</p>
-		
 	</body>
 </html>
