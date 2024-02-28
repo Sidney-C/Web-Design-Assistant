@@ -122,8 +122,9 @@ def currentpage(currenturl):
 
     currentassets = allassets[currenturl]
     stopnum = currentassets[-1]
+    print(sitenames)
     
-    return render_template('testpage2.html', currentassets = currentassets, stopnum = stopnum, websitename = websitename)
+    return render_template('testpage2.html', currentassets = currentassets, stopnum = stopnum, websitename = websitename, navbarlinks = navbarlinks, sitenames = sitenames)
 
 @app.route('/testpage3')
 def testpage3():
