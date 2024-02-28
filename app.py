@@ -33,12 +33,12 @@ def welcome():
     launchapp = LaunchApp()
 
     if launchapp.validate_on_submit():
-        return redirect(url_for('testpage1'))
+        return redirect(url_for('chat'))
 
     return render_template('welcome.html', launchapp = launchapp)
 
-@app.route('/testpage1', methods = ['GET', 'POST'])
-def testpage1():
+@app.route('/chat', methods = ['GET', 'POST'])
+def chat():
     
     global imagecount
     global websitename
@@ -106,17 +106,17 @@ def testpage1():
             chatbox = formfields[session['i']]()
             chatbox.userinput.data = ''
 
-    return render_template('testpage1.html', chatbox = chatbox)
+    return render_template('chat.html', chatbox = chatbox)
 
-@app.route('/testpage2')
-def testpage2():
+@app.route('/yourwebsite')
+def yourwebsite():
 
     stopnum = session.get('stopnum')
     
     print(allassets)
-    return render_template('testpage2.html', assetlist = assetlist, stopnum = stopnum, websitename = websitename)
+    return render_template('yourwebsite.html', assetlist = assetlist, stopnum = stopnum, websitename = websitename)
 
-@app.route('/testpage2/<currenturl>')
+@app.route('/yourwebsite/<currenturl>')
 def currentpage(currenturl):
 
 
@@ -124,16 +124,16 @@ def currentpage(currenturl):
     stopnum = currentassets[-1]
     print(sitenames)
     
-    return render_template('testpage2.html', currentassets = currentassets, stopnum = stopnum, websitename = websitename, navbarlinks = navbarlinks, sitenames = sitenames)
+    return render_template('yourwebsite.html', currentassets = currentassets, stopnum = stopnum, websitename = websitename, navbarlinks = navbarlinks, sitenames = sitenames)
 
-@app.route('/testpage3')
-def testpage3():
+@app.route('/showsource')
+def showsource():
 
     findbrowser = request.user_agent.string
     browser = parse(findbrowser)
     browsername = browser.browser.family
 
-    return render_template('testpage3.html', browsername=browsername)
+    return render_template('showsource.html', browsername=browsername)
 
 if __name__ == '__main__':
     app.run(debug = True)
