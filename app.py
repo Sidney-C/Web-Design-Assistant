@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, StringField, RadioField, SubmitField, FileField, validators
 from user_agents import parse
 from forms import *
+#from chatoptions import options
 import os
 
 app = Flask(__name__)
@@ -18,6 +19,8 @@ navbarlinks = {}
 sitenames = []
 formfields = [PageName, URLName, PageText, PageImage, NewSection, AddToNavbar]
 websitename = ''
+websitetheme = ''
+stopnum = 0
 
 def checkextension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -43,6 +46,8 @@ def chat():
     global imagecount
     global websitename
     global assetlist
+    global websitetheme
+    global stopnum
 
     if 'i' not in session:
         session['i'] = 0
@@ -51,8 +56,15 @@ def chat():
         chatbox = WebsiteName()
         if chatbox.validate_on_submit():
             websitename = chatbox.userinput.data
+            #chatbox = WebsiteTheme()
             chatbox = formfields[session['i']]()
             chatbox.userinput.data = ''
+
+    #if websitetheme == '':
+        #if chatbox.validate_on_submit():
+            #websitetheme = chatbox.userinput.data
+            #chatbox = formfields[session['i']]()
+            #chatbox.userinput.data = ''
 
     else:
         chatbox = formfields[session['i']]()
