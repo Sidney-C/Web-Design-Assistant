@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, StringField, RadioField, SubmitField, FileField, validators
 from user_agents import parse
 from forms import *
+from helpdocumentation import helpdocs
 import os
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ starterassets = []
 websitename = ''
 websitetheme = ''
 stopnum = 0
+chatbox = ''
 
 def checkextension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -45,6 +47,7 @@ def welcome():
 def choosename():
     
     global websitename
+    global chatbox
 
     chatbox = WebsiteName()
 
@@ -59,6 +62,7 @@ def choosename():
 def choosetheme():
     
     global websitetheme
+    global chatbox
 
     chatbox = WebsiteTheme()
 
@@ -77,6 +81,7 @@ def chat():
     global assetlist
     global websitetheme
     global stopnum
+    global chatbox
 
     if 'i' not in session:
         session['i'] = 0
@@ -160,6 +165,13 @@ def showsource():
     browsername = browser.browser.family
 
     return render_template('showsource.html', browsername=browsername)
+
+@app.route('/help')
+def help():
+
+    helpdoc = helpdocs(str(chatbox.__class__))
+
+    return render_template('help.html', helpdoc = helpdoc)
 
 if __name__ == '__main__':
     app.run(debug = True)
