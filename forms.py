@@ -4,6 +4,7 @@ from wtforms import TextAreaField, StringField, RadioField, SubmitField, FileFie
 
 submittext = 'Submit'
 websitenametext = '''Hi there! To get started, enter the name of your website. Keep in mind that this will appear at the top of every page.'''
+websitethemetext = '''Choose a theme for your website. This will be applied to every page.'''
 pagenametext = '''Now, enter the name of this page. The name you enter will appear at the top of the page.'''
 urlnametext = '''Enter the URL for this page. This will appear at the end of it's address, so I recommend you make it short and simple.'''
 pagetexttext = '''Enter the text for the current section of this page. Don't worry about fitting everything in, as you will have the option to add another section soon'''
@@ -13,6 +14,10 @@ addtonavbartext = '''Would you like to add a link to this page to the navigation
 
 class WebsiteName(FlaskForm):
     userinput = StringField(websitenametext, [validators.DataRequired()])
+    submit = SubmitField(submittext)
+
+class WebsiteTheme(FlaskForm):
+    userinput = RadioField(websitethemetext, choices = [('Dark', 'Dark'), ('Light', 'Light')])
     submit = SubmitField(submittext)
 
 class PageName(FlaskForm):
