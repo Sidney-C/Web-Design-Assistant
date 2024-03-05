@@ -85,6 +85,8 @@ def chat():
     global chatbox
     global errormessage
 
+    skipalt = False
+
     if 'i' not in session:
         session['i'] = 0
 
@@ -134,17 +136,19 @@ def chat():
                 assetlist[-1].append("no file uploaded")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
+                skipalt = True
                 session['i'] += 1
         
         else:
             assetlist.append(chatbox.userinput.data)
             if errormessage != '':
                 assetlist.pop(-1)
-
-        if session['i'] == 4:
-            if chatbox.validate_on_submit():
-                assetlist.pop(-1)
-                assetlist[-1].append(chatbox.userinput.data)
+                
+        if skipalt == False:
+            if session['i'] == 4:
+                if chatbox.validate_on_submit():
+                    assetlist.pop(-1)
+                    assetlist[-1].append(chatbox.userinput.data)
 
         if session['i'] == 5:
             if chatbox.userinput.data == 'Yes':
@@ -159,7 +163,8 @@ def chat():
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
             assetlist.pop(-1)
-                
+
+        skipalt == False        
         session['i'] += 1
         if session['i'] == len(formfields):
             assetlist.append(session['stopnum'])
