@@ -7,13 +7,13 @@
 		<title>Web Design Assistant</title>
 		<style>
 			nav.custom-navbar {border: 5px solid #1860c4; border-radius: 10px;}
-			.custom-toast {--bs-toast-max-width: 700px; font-size: 25px; position: absolute; left: 10%; top: 10%;}
-			.chatboxform {font-size: 25px; position: absolute; right: 10%; top: 40%; width: 70%;}
+			.custom-toast {--bs-toast-max-width: 700px; font-size: 20px; position: absolute; left: 5%; top: 5%; width: 80%; margin-bottom: 1%;}
+			.chatboxform {font-size: 20px; position: absolute; right: 5%; top: 30%; width: 80%; margin-top: 5%;}
 			.chatbg {background-color: #f0f4fa;}
-			.custom-box {padding: 100px 50px; font-size: 25px;}
-			.custom-submit {font-size: 25px; padding: 10px 10px; width: 100%; margin-top: 1%; border-radius: 10px;}
-			.help-button {font-size: 25px; width: 100%; margin-top: 1%; border-radius: 10px;}
-			.container-border {border: 5px solid #1860c4; border-radius: 20px; padding: 20%; width: 60%; position: absolute; top: 15%; left: 20%; background-color: #c4def5;}
+			.custom-box {padding: 50px 50px; font-size: 20px;}
+			.custom-submit {font-size: 20px; padding: 10px 10px; width: 100%; margin-top: 1%; border-radius: 10px;}
+			.help-button {font-size: 20px; width: 100%; margin-top: 1%; border-radius: 10px;}
+			.container-border {border: 5px solid #1860c4; border-radius: 20px; padding: 20%; background-color: #c4def5; width: 80%; position: relative; top: 15%;}
 			.custom-heading {font-size: 60px; font-weight: bold; padding: 0% 20%; color: #4f4f4f;}
 			
 		</style>
@@ -24,12 +24,18 @@
 				<h1 class="custom-heading">Web Design Assistant</h1>
 			</div>
 		</nav>
-		<div class="container-border">
+		<br>
+		<div class="container-sm container-border">
 			<div role="alert" aria-live="assertive" aria-atomic="true" class="toast text-white bg-primary border-0 custom-toast" data-bs-autohide="false">
 				<div class="toast-header">
 					<strong class="me-auto">Web Design Assistant</strong>
 				</div>
+				<div>
+				</div>
 				<div class="toast-body">
+					{%if not errormessage == ''%}
+						{{errormessage}}
+					{%endif%}
 					{{chatbox.userinput.label}}
 				</div>
 			</div>
@@ -57,3 +63,7 @@
 	</body>
 </html>
 
+<!--
+ container-border
+
+-->
