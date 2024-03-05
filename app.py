@@ -24,6 +24,7 @@ websitename = ''
 websitetheme = ''
 stopnum = 0
 chatbox = ''
+errormessage = ''
 
 def checkextension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -82,6 +83,7 @@ def chat():
     global websitetheme
     global stopnum
     global chatbox
+    global errormessage
 
     if 'i' not in session:
         session['i'] = 0
@@ -89,6 +91,30 @@ def chat():
     chatbox = formfields[session['i']]()
 
     if chatbox.validate_on_submit():
+
+        if session['i'] == 0:
+
+            errormessage = ''
+
+            for j in allassets:
+
+                if allassets[j][0] == chatbox.userinput.data:
+                    errormessage = 'ERROR: Name already in use. Choose another name.'
+                    print(errormessage)
+                    chatbox.userinput.data = ''
+                    session['i'] = -1
+
+        if session['i'] == 1:
+
+            errormessage = ''
+
+            for j in allassets:
+                
+                if allassets[j][1] == chatbox.userinput.data:
+                    errormessage = 'ERROR: URL already in use. Choose another URL.'
+                    print(errormessage)
+                    chatbox.userinput.data = ''
+                    session['i'] = 0
 
         if session['i'] == 2:
             assetlist.append([chatbox.userinput.data])
@@ -137,7 +163,7 @@ def chat():
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
 
-    return render_template('chat.html', chatbox = chatbox)
+    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
 
 @app.route('/yourwebsite')
 def yourwebsite():
