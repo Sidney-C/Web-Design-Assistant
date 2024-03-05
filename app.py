@@ -136,6 +136,8 @@ def chat():
         
         else:
             assetlist.append(chatbox.userinput.data)
+            if errormessage != '':
+                assetlist.pop(-1)
 
         if session['i'] == 4:
             if chatbox.userinput.data == 'Yes':
@@ -162,6 +164,7 @@ def chat():
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
+        print(assetlist)
 
     return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
 
@@ -176,10 +179,10 @@ def yourwebsite():
 @app.route('/yourwebsite/<currenturl>')
 def currentpage(currenturl):
 
-    print(websitetheme)
-    print(websitename)
+    
     currentassets = allassets[currenturl]
     stopnum = currentassets[-1]
+    print("Stopnum is now " + str(stopnum))
     
     return render_template('yourwebsite.html', websitename = websitename, websitetheme = websitetheme, currentassets = currentassets, stopnum = stopnum, navbarlinks = navbarlinks, sitenames = sitenames)
 
