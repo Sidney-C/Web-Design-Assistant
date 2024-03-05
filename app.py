@@ -17,7 +17,7 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, PageImage, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, PageImage, AltText, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
@@ -129,10 +129,12 @@ def chat():
                 assetlist[-1].append(filename)
                 chatbox.userinput.data = ''
                 session.pop('image', None)
+                
             else:
                 assetlist[-1].append("no file uploaded")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
+                session['i'] += 1
         
         else:
             assetlist.append(chatbox.userinput.data)
@@ -140,6 +142,11 @@ def chat():
                 assetlist.pop(-1)
 
         if session['i'] == 4:
+            if chatbox.validate_on_submit():
+                assetlist.pop(-1)
+                assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 5:
             if chatbox.userinput.data == 'Yes':
                 session['i'] = 1
             else:
@@ -147,7 +154,7 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 5:
+        if session['i'] == 6:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
@@ -164,6 +171,8 @@ def chat():
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
+        print("You are currently on step " + str(session['i']))
+        print('The list of assets is as follows:')
         print(assetlist)
 
     return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
