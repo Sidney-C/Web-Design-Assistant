@@ -17,13 +17,14 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, PageImage, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, PageImage, AltText, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
 websitetheme = ''
 stopnum = 0
 chatbox = ''
+errormessage = ''
 
 def checkextension(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -82,6 +83,7 @@ def chat():
     global websitetheme
     global stopnum
     global chatbox
+    global errormessage
 
     if 'i' not in session:
         session['i'] = 0
@@ -89,6 +91,30 @@ def chat():
     chatbox = formfields[session['i']]()
 
     if chatbox.validate_on_submit():
+
+        if session['i'] == 0:
+
+            errormessage = ''
+
+            for j in allassets:
+
+                if allassets[j][0] == chatbox.userinput.data:
+                    errormessage = 'ERROR: Name already in use. Choose another name.'
+                    print(errormessage)
+                    chatbox.userinput.data = ''
+                    session['i'] = -1
+
+        if session['i'] == 1:
+
+            errormessage = ''
+
+            for j in allassets:
+                
+                if allassets[j][1] == chatbox.userinput.data:
+                    errormessage = 'ERROR: URL already in use. Choose another URL.'
+                    print(errormessage)
+                    chatbox.userinput.data = ''
+                    session['i'] = 0
 
         if session['i'] == 2:
             assetlist.append([chatbox.userinput.data])
@@ -103,15 +129,24 @@ def chat():
                 assetlist[-1].append(filename)
                 chatbox.userinput.data = ''
                 session.pop('image', None)
+                
             else:
                 assetlist[-1].append("no file uploaded")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
+                session['i'] += 1
         
         else:
             assetlist.append(chatbox.userinput.data)
+            if errormessage != '':
+                assetlist.pop(-1)
 
         if session['i'] == 4:
+            if chatbox.validate_on_submit():
+                assetlist.pop(-1)
+                assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 5:
             if chatbox.userinput.data == 'Yes':
                 session['i'] = 1
             else:
@@ -119,7 +154,7 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 5:
+        if session['i'] == 6:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
@@ -136,8 +171,11 @@ def chat():
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
+        print("You are currently on step " + str(session['i']))
+        print('The list of assets is as follows:')
+        print(assetlist)
 
-    return render_template('chat.html', chatbox = chatbox)
+    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
 
 @app.route('/yourwebsite')
 def yourwebsite():
@@ -150,10 +188,10 @@ def yourwebsite():
 @app.route('/yourwebsite/<currenturl>')
 def currentpage(currenturl):
 
-    print(websitetheme)
-    print(websitename)
+    
     currentassets = allassets[currenturl]
     stopnum = currentassets[-1]
+    print("Stopnum is now " + str(stopnum))
     
     return render_template('yourwebsite.html', websitename = websitename, websitetheme = websitetheme, currentassets = currentassets, stopnum = stopnum, navbarlinks = navbarlinks, sitenames = sitenames)
 

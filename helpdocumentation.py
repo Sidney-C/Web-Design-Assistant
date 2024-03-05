@@ -46,6 +46,14 @@ def helpdocs(whichclass):
         placed alongside the paragraph that you just uploaded in the
         prior step. This step is optional.'''
 
+    elif whichclass == "<class 'forms.AltText'>":
+        helpdoc = '''Here, you must enter a description of the image you
+        just uploaded. This description is not a caption, but something
+        called alt-text. If a visually impaired user is accessing your
+        site with a screen reader, this description will be what they
+        hear. It does not normally show on the screen, so don't worry
+        about it affecting the appearance of your site. '''
+
     elif whichclass == "<class 'forms.NewSection'>":
         helpdoc = '''Here, you can choose to add a new paragraph to your
         website. If you choose to do so, you will repeat the previous
