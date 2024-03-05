@@ -41,7 +41,7 @@
 					<p>{{currentassets[i][0]}}</p>
 					{%if not currentassets[i][1] == "no file uploaded"%}
 						<div>
-							<img src="/static/{{currentassets[i][1]}}" alt="Your Image">
+							<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
 						</div>
 						<br>
 					{%endif%}
