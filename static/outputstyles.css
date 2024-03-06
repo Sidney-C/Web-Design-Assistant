@@ -1,0 +1,33 @@
+/*ALL*/
+
+.container-all {width: 100%; position: absolute; left: 5%; margin-bottom: 2%;}
+
+.container-yourwebsite {width: 100%; position: relative; margin-bottom: 2%;}
+
+.links-yourwebsite {width: 100%; position: relative; bottom: 15%; margin-top: 2%; font-size: 20px;}
+
+/*DARK THEME*/
+
+.darktheme-body {background-color: #455875;}
+
+.darktheme-navbar {border: 5px solid #1860c4; border-radius: 10px; margin-bottom: 2%; background-color: #5d87c7;}
+
+.darktheme-heading {font-size: 60px; font-weight: bold; color: #ebedf0;}
+
+.darktheme-navlink {font-size: 30px; color: #ebedf0;}
+
+.darktheme-pagename {font-size: 50px; font-weight: bold; color: #ebedf0;}
+
+.darktheme-pagetext {font-size: 20px; color: #ebedf0;}
+
+/*LIGHT THEME*/
+
+.lighttheme-navbar {border: 5px solid #1860c4; border-radius: 10px; margin-bottom: 2%; background-color: #e3f2fd;}
+
+.lighttheme-heading {font-size: 60px; font-weight: bold; color: #4f4f4f;}
+
+.lighttheme-navlink {font-size: 30px; color: #4f4f4f;}
+
+.lighttheme-pagename {font-size: 50px; font-weight: bold; color: #4f4f4f;}
+
+.lighttheme-pagetext {font-size: 20px; color: #4f4f4f;}
