@@ -51,10 +51,16 @@
 						{%endif%}
 					</div>
 					{%for i in range(2, stopnum)%}
+						<!--check if theres an image-->
+						<!--if there's an image, do the following, if not, execute another block with no image-->
 						{%if websitetheme == 'Dark'%}
 							<div class="darktheme-pagetext">
+								<!--if the image is above, put it here-->
 								<p>{{currentassets[i][0]}}</p>
+								<!--if the image is left or right, put it in the above p tag-->
 								{%if not currentassets[i][1] == "no file uploaded"%}
+								<!--ignore the above line-->
+								<!--if the image is below, put it here-->
 									<div>
 										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
 									</div>
