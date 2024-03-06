@@ -25,9 +25,6 @@
 				<h1 class="custom-heading">Web Design Assistant</h1>
 			</div>
 		</nav>
-		<!--<div>
-			<h4>Hello and Welcome!</h4>
-		</div>-->
 		<div class="container-sm container-border">
 			<div class="container-sm container-welcome-chat">
 				<h4>Hello and Welcome! Thank you for choosing to work with me, the Web Design Assistant, and taking the first step on your journey to make your own website. I am going to ask you a series of questions about how you want your website to look, feel and work.<br><br>You will be expected to provide content such as text, pictures, and links to other websites, but I will do the difficult work of placing them on the website for you, and making sure they all fit together properly.<br><br>If at any point I say something that confuses you, or if you'd just like more information before making a decision, click the "Get Help" links below each question. If this is your first time making a website, I strongly recommend clicking these buttons anyway, so you can learn about the context of what you are doing as you go along.<br><br>When you're ready to get started, click the "Begin" button below!</h4>
@@ -37,12 +34,5 @@
 				{{launchapp.submit(class = "btn btn-primary welcome-button")}}
 			</form>
 		</div>
-	<script>
-		var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-		var toastList = toastElList.map(function (toastEl) {
-			return new bootstrap.Toast(toastEl, { autohide: false })
-		});
-		toastList.forEach(toast => toast.show());
-	</script>
 	</body>
 </html>
