@@ -3,21 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<link href="{{ url_for('static', filename='customstyles.css') }}" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 		<title>Your Code</title>
-		<style>
-			.custom-navbar {border: 5px solid #1860c4; border-radius: 10px; margin-bottom: 2%;}
-			.chatboxform {font-size: 20px; position: absolute; right: 5%; top: 30%; width: 80%; margin-top: 5%;}
-			.welcomeform {position: relative; top: 60%; left: 5%; width: 90%; margin-top: 2%;}
-			.chatbg {background-color: #f0f4fa;}
-			.custom-submit {font-size: 20px; padding: 10px 10px; width: 100%; margin-top: 1%; border-radius: 10px;}
-			.help-button {font-size: 20px; width: 100%; margin-top: 1%; border-radius: 10px;}
-			.container-border {border: 5px solid #1860c4; border-radius: 20px; padding-bottom: 5%; background-color: #c4def5; width: 80%; position: relative; top: 30%}
-			.custom-heading {font-size: 60px; font-weight: bold; color: #4f4f4f;}
-			.container-welcome-chat {border: 5px solid #1860c4; border-radius: 10px; background-color: #edf6f7; width: 90%; position: relative; top: 15%; margin-top: 2%; padding: 2%}
-			.welcome-button {font-size: 30px; width: 100%; padding: 1%;}
-			
-		</style>
 	</head>
 	<body>
 		<nav class="navbar custom-navbar" style="background-color: #e3f2fd;">
