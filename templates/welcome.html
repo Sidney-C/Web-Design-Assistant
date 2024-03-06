@@ -6,25 +6,43 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 		<title>Your Code</title>
 		<style>
-			nav.custom-navbar {border-radius: 10px;}
+			.custom-navbar {border: 5px solid #1860c4; border-radius: 10px; margin-bottom: 2%;}
+			.chatboxform {font-size: 20px; position: absolute; right: 5%; top: 30%; width: 80%; margin-top: 5%;}
+			.welcomeform {position: relative; top: 60%; left: 5%; width: 90%; margin-top: 2%;}
+			.chatbg {background-color: #f0f4fa;}
+			.custom-submit {font-size: 20px; padding: 10px 10px; width: 100%; margin-top: 1%; border-radius: 10px;}
+			.help-button {font-size: 20px; width: 100%; margin-top: 1%; border-radius: 10px;}
+			.container-border {border: 5px solid #1860c4; border-radius: 20px; padding-bottom: 5%; background-color: #c4def5; width: 80%; position: relative; top: 30%}
+			.custom-heading {font-size: 60px; font-weight: bold; color: #4f4f4f;}
+			.container-welcome-chat {border: 5px solid #1860c4; border-radius: 10px; background-color: #edf6f7; width: 90%; position: relative; top: 15%; margin-top: 2%; padding: 2%}
+			.welcome-button {font-size: 30px; width: 100%; padding: 1%;}
+			
 		</style>
 	</head>
 	<body>
 		<nav class="navbar custom-navbar" style="background-color: #e3f2fd;">
 			<div class="container-fluid">
-				<h3>Web Design Assistant</h3>
+				<h1 class="custom-heading">Web Design Assistant</h1>
 			</div>
 		</nav>
-		<div>
+		<!--<div>
 			<h4>Hello and Welcome!</h4>
+		</div>-->
+		<div class="container-sm container-border">
+			<div class="container-sm container-welcome-chat">
+				<h4>Hello and Welcome! Thank you for choosing to work with me, the Web Design Assistant, and taking the first step on your journey to make your own website. I am going to ask you a series of questions about how you want your website to look, feel and work.<br><br>You will be expected to provide content such as text, pictures, and links to other websites, but I will do the difficult work of placing them on the website for you, and making sure they all fit together properly.<br><br>If at any point I say something that confuses you, or if you'd just like more information before making a decision, click the "Get Help" links below each question. If this is your first time making a website, I strongly recommend clicking these buttons anyway, so you can learn about the context of what you are doing as you go along.<br><br>When you're ready to get started, click the "Begin" button below!</h4>
+			</div>
+			<form method='POST' class="welcomeform" enctype="multipart/form-data">
+				{{launchapp.hidden_tag()}}
+				{{launchapp.submit(class = "btn btn-primary welcome-button")}}
+			</form>
 		</div>
-		<div>
-			<p>Thank you for choosing the Web Design Assistant, and taking the first step on your journey to make your own website. I am going to ask you a series of questions about how you want your website to look, feel and work. You will be expected to provide content such as text, pictures, and links to other websites, but I will do the difficult work of placing them on the website for you, and making sure they all fit together properly. If at any point I say something that confuses you, or if you'd just like more information before making a decision, click the "Get Help" links below each question.</p>
-			<p>When you're ready to get started, click the "Begin" button below!</p>
-		</div>
-		<form method='POST' enctype="multipart/form-data">
-			{{launchapp.hidden_tag()}}
-			{{launchapp.submit(class = "btn btn-primary")}}
-		</form>
+	<script>
+		var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+		var toastList = toastElList.map(function (toastEl) {
+			return new bootstrap.Toast(toastEl, { autohide: false })
+		});
+		toastList.forEach(toast => toast.show());
+	</script>
 	</body>
 </html>
