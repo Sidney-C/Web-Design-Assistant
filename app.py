@@ -102,7 +102,6 @@ def chat():
 
                 if allassets[j][0] == chatbox.userinput.data:
                     errormessage = 'ERROR: Name already in use. Choose another name.'
-                    print(errormessage)
                     chatbox.userinput.data = ''
                     session['i'] = -1
 
@@ -114,9 +113,18 @@ def chat():
                 
                 if allassets[j][1] == chatbox.userinput.data:
                     errormessage = 'ERROR: URL already in use. Choose another URL.'
-                    print(errormessage)
                     chatbox.userinput.data = ''
                     session['i'] = 0
+
+            for j in chatbox.userinput.data:
+
+                if not j.isalpha():
+                    if not j.isnumeric():
+                        if j != '_':
+                            if j != '-':
+                                errormessage = 'ERROR. URL contains an invalid character. Choose another URL, using only letters, numbers, "_", and "-".'
+                                chatbox.userinput.data = ''
+                                session['i'] = 0
 
         if session['i'] == 2:
             assetlist.append([chatbox.userinput.data])
@@ -176,9 +184,6 @@ def chat():
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
-        print("You are currently on step " + str(session['i']))
-        print('The list of assets is as follows:')
-        print(assetlist)
 
     return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
 
@@ -187,16 +192,13 @@ def yourwebsite():
 
     stopnum = session.get('stopnum')
     
-    print(allassets)
     return render_template('yourwebsite.html', assetlist = assetlist, stopnum = stopnum, websitename = websitename)
 
 @app.route('/yourwebsite/<currenturl>')
 def currentpage(currenturl):
 
-    
     currentassets = allassets[currenturl]
     stopnum = currentassets[-1]
-    print("Stopnum is now " + str(stopnum))
     
     return render_template('yourwebsite.html', websitename = websitename, websitetheme = websitetheme, currentassets = currentassets, stopnum = stopnum, navbarlinks = navbarlinks, sitenames = sitenames)
 
