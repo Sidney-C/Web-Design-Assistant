@@ -16,12 +16,10 @@
 		<br>
 		<div class="container-sm container-border">
 			<div class="container-sm container-main-chat">
-				<h4>
-					{%if not errormessage == ''%}
-						{{errormessage}}
-					{%endif%}
-					{{chatbox.userinput.label}}
-				</h4>
+				{%if not errormessage == ''%}
+					<h4 style="color: red;">{{errormessage}}</h4>
+				{%endif%}
+				<h4>{{chatbox.userinput.label}}</h4>
 			</div>
 			<form method='POST' class="mainform" enctype="multipart/form-data">
 				{{chatbox.hidden_tag()}}
