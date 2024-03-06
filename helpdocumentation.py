@@ -27,7 +27,7 @@ def helpdocs(whichclass):
     elif whichclass == "<class 'forms.URLName'>":
         helpdoc = '''Here, you need to enter the last part of the web
         address of this individual page. This will go in the search bar
-        at the top of your browser (e.g. www.yourwebsite.com/address).
+        at the top of your browser (e.g. www.example.com/address).
         It must be unique, as any web address can point to one page and
         one page only. It must also contain only letters, numbers, "_",
         and "-", in any combination, so no spaces or special characters
