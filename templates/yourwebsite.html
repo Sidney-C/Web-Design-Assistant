@@ -51,32 +51,48 @@
 						{%endif%}
 					</div>
 					{%for i in range(2, stopnum)%}
-						<!--check if theres an image-->
-						<!--if there's an image, do the following, if not, execute another block with no image-->
-						{%if websitetheme == 'Dark'%}
-							<div class="darktheme-pagetext">
-								<!--if the image is above, put it here-->
-								<p>{{currentassets[i][0]}}</p>
-								<!--if the image is left or right, put it in the above p tag-->
-								{%if not currentassets[i][1] == "no file uploaded"%}
-								<!--ignore the above line-->
-								<!--if the image is below, put it here-->
-									<div>
+						{%if not currentassets[i][1] == "no file uploaded"%}
+							{%if websitetheme == 'Dark'%}
+								<div class="darktheme-pagetext">
+									{%if currentassets[i][3] == 'Above'%}
 										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
-									</div>
+										<p>{{currentassets[i][0]}}</p>
+									{%elif currentassets[i][3] == 'Left'%}
+										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">{{currentassets[i][0]}}</p>
+									{%elif currentassets[i][3] == 'Right'%}
+										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}"></p>
+									{%else%}
+										<p>{{currentassets[i][0]}}</p>
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+									{%endif%}
 									<br>
-								{%endif%}
-							</div>
+								</div>
+							{%else%}
+								<div class="lighttheme-pagetext">
+									{%if currentassets[i][3] == 'Above'%}
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+										<p>{{currentassets[i][0]}}</p>
+									{%elif currentassets[i][3] == 'Left'%}
+										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">{{currentassets[i][0]}}</p>
+									{%elif currentassets[i][3] == 'Right'%}
+										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}"></p>
+									{%else%}
+										<p>{{currentassets[i][0]}}</p>
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+									{%endif%}
+									<br>
+								</div>
+							{%endif%}
 						{%else%}
-							<div class="lighttheme-pagetext">
-								<p>{{currentassets[i][0]}}</p>
-								{%if not currentassets[i][1] == "no file uploaded"%}
-									<div>
-										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
-									</div>
-									<br>
-								{%endif%}
-							</div>
+							{%if websitetheme == 'Dark'%}
+								<div class="darktheme-pagetext">
+									<p>{{currentassets[i][0]}}</p>
+								</div>
+							{%else%}
+								<div class="lighttheme-pagetext">
+									<p>{{currentassets[i][0]}}</p>
+								</div>
+							{%endif%}
 						{%endif%}
 					{%endfor%}
 				</div>

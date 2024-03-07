@@ -17,7 +17,7 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, PageImage, AltText, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, PageImage, AltText, ImagePosition, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
@@ -85,10 +85,10 @@ def chat():
     global chatbox
     global errormessage
 
-    skipalt = False
-
     if 'i' not in session:
         session['i'] = 0
+
+    increasei = True
 
     chatbox = formfields[session['i']]()
 
@@ -97,17 +97,24 @@ def chat():
         if session['i'] == 0:
 
             errormessage = ''
+            
+            if allassets:
+                for j in allassets:
 
-            for j in allassets:
-
-                if allassets[j][0] == chatbox.userinput.data:
-                    errormessage = 'ERROR: Name already in use. Choose another name.'
-                    chatbox.userinput.data = ''
-                    session['i'] = -1
-
+                    if allassets[j][0] == chatbox.userinput.data:
+                        errormessage = 'ERROR: Name already in use. Choose another name.'
+                        chatbox.userinput.data = ''
+                        session['i'] = -1
+                    else:
+                        assetlist.append(chatbox.userinput.data)
+            else:
+                assetlist.append(chatbox.userinput.data)
+            
+            
         if session['i'] == 1:
 
             errormessage = ''
+            doappend = True
 
             for j in allassets:
                 
@@ -115,6 +122,7 @@ def chat():
                     errormessage = 'ERROR: URL already in use. Choose another URL.'
                     chatbox.userinput.data = ''
                     session['i'] = 0
+                    doappend = False
 
             for j in chatbox.userinput.data:
 
@@ -125,11 +133,15 @@ def chat():
                                 errormessage = 'ERROR. URL contains an invalid character. Choose another URL, using only letters, numbers, "_", and "-".'
                                 chatbox.userinput.data = ''
                                 session['i'] = 0
+                                doappend = False
+
+            if doappend == True:
+                assetlist.append(chatbox.userinput.data)
 
         if session['i'] == 2:
             assetlist.append([chatbox.userinput.data])
 
-        elif session['i'] == 3:
+        if session['i'] == 3:
             session['image'] = chatbox.userinput.data
             if session['image'] and checkextension(session['image'].filename):
                 filename = 'user_image' + str(imagecount)
@@ -144,21 +156,19 @@ def chat():
                 assetlist[-1].append("no file uploaded")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
-                skipalt = True
-                session['i'] += 1
-        
-        else:
-            assetlist.append(chatbox.userinput.data)
-            if errormessage != '':
-                assetlist.pop(-1)
+                increasei = False
                 
-        if skipalt == False:
-            if session['i'] == 4:
-                if chatbox.validate_on_submit():
-                    assetlist.pop(-1)
-                    assetlist[-1].append(chatbox.userinput.data)
+        if session['i'] == 4:
+            if chatbox.validate_on_submit():
+                assetlist[-1].append(chatbox.userinput.data)
 
         if session['i'] == 5:
+            if chatbox.validate_on_submit():
+                assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 6:
+            assetlist.append(chatbox.userinput.data)
+            
             if chatbox.userinput.data == 'Yes':
                 session['i'] = 1
             else:
@@ -166,14 +176,16 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 6:
+        if session['i'] == 7:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
-            assetlist.pop(-1)
 
-        skipalt == False        
-        session['i'] += 1
+        if increasei:
+            session['i'] += 1
+        else:
+            session['i'] = 6
+        
         if session['i'] == len(formfields):
             assetlist.append(session['stopnum'])
             allassets[assetlist[1]] = assetlist
