@@ -45,7 +45,10 @@ def helpdocs(whichclass):
         helpdoc = '''Here, you can upload an image from your computer’s
         file storage. It must be in .jpg or .jpeg format. It will be
         placed alongside the paragraph that you just uploaded in the
-        prior step. This step is optional.'''
+        prior step. This step is optional. If you choose to upload an
+        image, you will have to answer questions on its positioning and
+        size, as well as entering a description of the image to be used
+        by screen readers, in the interest of accessibility.'''
 
     elif whichclass == "<class 'forms.AltText'>":
         helpdoc = '''Here, you must enter a description of the image you
@@ -60,6 +63,16 @@ def helpdocs(whichclass):
         image relative to the text in the current section. You can place
         it above the text, below the text, to the left, or to the
         right.'''
+
+    elif whichclass == "<class 'forms.ImageSize'>":
+        helpdoc = '''Here, use the buttons to choose a size for an
+        image. Extra Small has a width of 100 pixels, Small has a width
+        of 300 pixels, Medium has a width of 500 pixels, Large has a
+        width of 700 pixels, and Extra Large has a width of 900 pixels.
+        If you do not want to use any of these exact sizes, choose Auto,
+        and the image will retain its current size. Note that the fixed
+        sizes automatically update the image's height proportionate to
+        its width, so your image will never look distorted.'''
 
     elif whichclass == "<class 'forms.NewSection'>":
         helpdoc = '''Here, you can choose to add a new paragraph to your

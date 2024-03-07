@@ -17,7 +17,7 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, PageImage, AltText, ImagePosition, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, PageImage, AltText, ImagePosition, ImageSize, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
@@ -167,6 +167,23 @@ def chat():
                 assetlist[-1].append(chatbox.userinput.data)
 
         if session['i'] == 6:
+            if chatbox.validate_on_submit():
+                size = chatbox.userinput.data
+                if size == 'Extra Small':
+                    size = 'height: auto; width: 100px'
+                elif size == 'Small':
+                    size = 'height: auto; width: 300px'
+                elif size == 'Medium':
+                    size = 'height: auto; width: 500px'
+                elif size == 'Large':
+                    size = 'height: auto; width: 700px'
+                elif size == 'Extra Large':
+                    size = 'height: auto; width: 900px'
+                elif size == 'Auto':
+                    size = ''
+                assetlist[-1].append(size)
+
+        if session['i'] == 7:
             assetlist.append(chatbox.userinput.data)
             
             if chatbox.userinput.data == 'Yes':
@@ -176,7 +193,7 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 7:
+        if session['i'] == 8:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
@@ -184,7 +201,7 @@ def chat():
         if increasei:
             session['i'] += 1
         else:
-            session['i'] = 6
+            session['i'] = 7
         
         if session['i'] == len(formfields):
             assetlist.append(session['stopnum'])
