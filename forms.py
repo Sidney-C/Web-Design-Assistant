@@ -10,6 +10,7 @@ urlnametext = '''Enter the URL for this page. This will appear at the end of its
 pagetexttext = '''Enter the text for the current section of this page. Don't worry about fitting everything in, as you will have the option to add another section soon'''
 pageimagetext = '''If you'd like to add an image, upload it here using the "Browse" button. If you don't want an image, just click "Submit" without uploading anything.'''
 alttexttext = '''Enter a text description of the image, so that the page is accessible to people using screen readers.'''
+imagepositiontext = '''Choose where you would like the image to be placed in relation to the current paragraph of text.'''
 newsectiontext = '''Would you like to add another section to your page?'''
 addtonavbartext = '''Would you like to add a link to this page to the navigation bar at the top of the site?'''
 
@@ -39,6 +40,10 @@ class PageImage(FlaskForm):
 
 class AltText(FlaskForm):
     userinput = TextAreaField(alttexttext, [validators.DataRequired()])
+    submit = SubmitField(submittext)
+
+class ImagePosition(FlaskForm):
+    userinput = RadioField(imagepositiontext, choices = [('Above', 'Above'), ('Below', 'Below'), ('Left', 'Left'), ('Right', 'Right')])
     submit = SubmitField(submittext)
 
 class NewSection(FlaskForm):
