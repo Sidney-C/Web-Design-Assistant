@@ -55,6 +55,12 @@ def helpdocs(whichclass):
         hear. It does not normally show on the screen, so don't worry
         about it affecting the appearance of your site. '''
 
+    elif whichclass == "<class 'forms.ImagePosition'>":
+        helpdoc = '''Here, use the buttons to select the position of the
+        image relative to the text in the current section. You can place
+        it above the text, below the text, to the left, or to the
+        right.'''
+
     elif whichclass == "<class 'forms.NewSection'>":
         helpdoc = '''Here, you can choose to add a new paragraph to your
         website. If you choose to do so, you will repeat the previous
