@@ -11,6 +11,7 @@ pagetexttext = '''Enter the text for the current section of this page. Don't wor
 pageimagetext = '''If you'd like to add an image, upload it here using the "Browse" button. If you don't want an image, just click "Submit" without uploading anything.'''
 alttexttext = '''Enter a text description of the image, so that the page is accessible to people using screen readers.'''
 imagepositiontext = '''Choose where you would like the image to be placed in relation to the current paragraph of text.'''
+imagesizetext = '''Choose a size for the image, or select auto if you would like it to remain the size it currently is on your computer.'''
 newsectiontext = '''Would you like to add another section to your page?'''
 addtonavbartext = '''Would you like to add a link to this page to the navigation bar at the top of the site?'''
 
@@ -46,6 +47,10 @@ class ImagePosition(FlaskForm):
     userinput = RadioField(imagepositiontext, choices = [('Above', 'Above'), ('Below', 'Below'), ('Left', 'Left'), ('Right', 'Right')])
     submit = SubmitField(submittext)
 
+class ImageSize(FlaskForm):
+    userinput = RadioField(imagesizetext, choices = [('Extra Small', 'Extra Small'), ('Small', 'Small'), ('Medium', 'Medium'), ('Large', 'Large'), ('Extra Large', 'Extra Large'), ('Auto', 'Auto')])
+    submit = SubmitField(submittext)
+    
 class NewSection(FlaskForm):
     userinput = RadioField(newsectiontext, choices=[('Yes', 'Yes'), ('No', 'No')])
     submit = SubmitField(submittext)
