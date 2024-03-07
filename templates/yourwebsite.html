@@ -55,30 +55,30 @@
 							{%if websitetheme == 'Dark'%}
 								<div class="darktheme-pagetext">
 									{%if currentassets[i][3] == 'Above'%}
-										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">
 										<p>{{currentassets[i][0]}}</p>
 									{%elif currentassets[i][3] == 'Left'%}
-										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">{{currentassets[i][0]}}</p>
+										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">{{currentassets[i][0]}}</p>
 									{%elif currentassets[i][3] == 'Right'%}
-										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}"></p>
+										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}"></p>
 									{%else%}
 										<p>{{currentassets[i][0]}}</p>
-										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">
 									{%endif%}
 									<br>
 								</div>
 							{%else%}
 								<div class="lighttheme-pagetext">
 									{%if currentassets[i][3] == 'Above'%}
-										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">
 										<p>{{currentassets[i][0]}}</p>
 									{%elif currentassets[i][3] == 'Left'%}
-										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">{{currentassets[i][0]}}</p>
+										<p><img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">{{currentassets[i][0]}}</p>
 									{%elif currentassets[i][3] == 'Right'%}
-										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}"></p>
+										<p>{{currentassets[i][0]}}<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}"></p>
 									{%else%}
 										<p>{{currentassets[i][0]}}</p>
-										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}">
+										<img src="/static/{{currentassets[i][1]}}" alt="{{currentassets[i][2]}}" style="{{currentassets[i][4]}}">
 									{%endif%}
 									<br>
 								</div>
