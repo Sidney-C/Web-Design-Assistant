@@ -87,12 +87,14 @@ def chat():
 
     if 'i' not in session:
         session['i'] = 0
+        
+    if session['i'] < 1:
+        mainchat = False
 
     increasei = True
 
     chatbox = formfields[session['i']]()
     undobutton = UndoButton()
-    print(undobutton)
 
     if chatbox.validate_on_submit():
 
@@ -221,39 +223,36 @@ def chat():
             allassets[assetlist[1]] = assetlist
             currenturl = assetlist[1]
             assetlist = []
-            session['i'] = 0
+            session.pop('i', None)
             return redirect(url_for('currentpage', currenturl = currenturl))
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
-        print(assetlist)
-        print('getting to the bottom')
+        if session['i'] > 0:
+            mainchat = True
 
     elif undobutton.validate_on_submit():
-        #print('undo is executing again')
 
         if session['i'] == 1:
             assetlist.pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = False
 
         elif session['i'] == 2:
-            print('executing undo 2')
             assetlist.pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
         elif session['i'] == 3:
-            print('undo 3 is executing')
             assetlist.pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
         elif session['i'] == 5:
             assetlist[-1].pop(-1)
@@ -261,21 +260,21 @@ def chat():
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
         elif session['i'] == 6:
             assetlist[-1].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
         elif session['i'] == 7:
             assetlist[-1].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
         elif session['i'] == 8:
             if assetlist[-1][1] == "no file uploaded":
@@ -283,22 +282,21 @@ def chat():
                 session['i'] = 3
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
-                print(assetlist)
+                mainchat = True
             else:
                 assetlist[-1].pop(-1)
                 session['i'] += -1
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
-                print(assetlist)
+                mainchat = True
 
         elif session['i'] == 9:
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
-            print(assetlist)
+            mainchat = True
 
-    print('nearly there')
-    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage, undobutton = undobutton, mainchat = True)
+    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage, undobutton = undobutton, mainchat = mainchat)
 
 @app.route('/yourwebsite')
 def yourwebsite():
