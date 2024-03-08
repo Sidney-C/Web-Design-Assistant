@@ -41,6 +41,9 @@ def helpdocs(whichclass):
         paragraph, you will have the chance to do so after submitting
         the current paragraph.'''
 
+    elif whichclass == "<class 'forms.AddImage'>":
+        helpdoc = ''''''
+
     elif whichclass == "<class 'forms.PageImage'>":
         helpdoc = '''Here, you can upload an image from your computer’s
         file storage. It must be in .jpg or .jpeg format. It will be

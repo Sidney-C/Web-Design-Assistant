@@ -8,6 +8,7 @@ websitethemetext = '''Choose a theme for your website. This will be applied to e
 pagenametext = '''Now, enter the name of this page. The name you enter will appear at the top of the page.'''
 urlnametext = '''Enter the URL for this page. This will appear at the end of its address, so I recommend you make it short and simple. For technical reasons, it can only contain letters, numbers, "_", and "-".'''
 pagetexttext = '''Enter the text for the current section of this page. Don't worry about fitting everything in, as you will have the option to add another section soon'''
+addimagetext = '''Would you like to add an image?'''
 pageimagetext = '''If you'd like to add an image, upload it here using the "Browse" button. If you don't want an image, just click "Submit" without uploading anything.'''
 alttexttext = '''Enter a text description of the image, so that the page is accessible to people using screen readers.'''
 imagepositiontext = '''Choose where you would like the image to be placed in relation to the current paragraph of text.'''
@@ -33,6 +34,10 @@ class URLName(FlaskForm):
 
 class PageText(FlaskForm):
     userinput = TextAreaField(pagetexttext, [validators.DataRequired()])
+    submit = SubmitField(submittext)
+
+class AddImage(FlaskForm):
+    userinput = RadioField(addimagetext, choices = [('Yes', 'Yes'), ('No', 'No')])
     submit = SubmitField(submittext)
 
 class PageImage(FlaskForm):
@@ -61,3 +66,7 @@ class AddToNavbar(FlaskForm):
 
 class LaunchApp(FlaskForm):
     submit = SubmitField('Begin')
+
+class UndoButton(FlaskForm):
+    submit = SubmitField('Undo Last Step')
+

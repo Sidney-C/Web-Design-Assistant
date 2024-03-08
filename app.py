@@ -17,7 +17,7 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, PageImage, AltText, ImagePosition, ImageSize, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, AddImage, PageImage, AltText, ImagePosition, ImageSize, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
@@ -57,7 +57,7 @@ def choosename():
         chatbox.userinput.data = ''
         return redirect(url_for('choosetheme'))
 
-    return render_template('chat.html', chatbox = chatbox)
+    return render_template('chat.html', chatbox = chatbox, mainchat = False)
 
 @app.route('/choosetheme', methods = ['GET', 'POST'])
 def choosetheme():
@@ -72,7 +72,7 @@ def choosetheme():
         chatbox.userinput.data = ''
         return redirect(url_for('chat'))
 
-    return render_template('chat.html', chatbox = chatbox)
+    return render_template('chat.html', chatbox = chatbox, mainchat = False)
 
 @app.route('/chat', methods = ['GET', 'POST'])
 def chat():
@@ -91,6 +91,8 @@ def chat():
     increasei = True
 
     chatbox = formfields[session['i']]()
+    undobutton = UndoButton()
+    print(undobutton)
 
     if chatbox.validate_on_submit():
 
@@ -142,31 +144,38 @@ def chat():
             assetlist.append([chatbox.userinput.data])
 
         if session['i'] == 3:
-            session['image'] = chatbox.userinput.data
-            if session['image'] and checkextension(session['image'].filename):
+            if chatbox.userinput.data == 'No':
+                assetlist[-1].append("no file uploaded")
+                increasei = False
+
+        if session['i'] == 4:
+            if chatbox.userinput.data and checkextension(chatbox.userinput.data.filename):
+                session['image'] = chatbox.userinput.data.filename
+            else:
+                session['image'] = None
+            if session['image']:
                 filename = 'user_image' + str(imagecount)
                 imagecount += 1
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                session['image'].save(filepath)
+                chatbox.userinput.data.save(filepath)
                 assetlist[-1].append(filename)
                 chatbox.userinput.data = ''
                 session.pop('image', None)
-                
             else:
-                assetlist[-1].append("no file uploaded")
+                assetlist[-1].append("repeat")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
                 increasei = False
                 
-        if session['i'] == 4:
-            if chatbox.validate_on_submit():
-                assetlist[-1].append(chatbox.userinput.data)
-
         if session['i'] == 5:
             if chatbox.validate_on_submit():
                 assetlist[-1].append(chatbox.userinput.data)
 
         if session['i'] == 6:
+            if chatbox.validate_on_submit():
+                assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 7:
             if chatbox.validate_on_submit():
                 size = chatbox.userinput.data
                 if size == 'Extra Small':
@@ -183,7 +192,7 @@ def chat():
                     size = ''
                 assetlist[-1].append(size)
 
-        if session['i'] == 7:
+        if session['i'] == 8:
             assetlist.append(chatbox.userinput.data)
             
             if chatbox.userinput.data == 'Yes':
@@ -193,7 +202,7 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 8:
+        if session['i'] == 9:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
@@ -201,7 +210,11 @@ def chat():
         if increasei:
             session['i'] += 1
         else:
-            session['i'] = 7
+            if assetlist[-1][-1] == "no file uploaded":
+                session['i'] = 8
+            else:
+                session['i'] = 3
+                assetlist[-1].pop(-1)
         
         if session['i'] == len(formfields):
             assetlist.append(session['stopnum'])
@@ -213,8 +226,79 @@ def chat():
         
         chatbox = formfields[session['i']]()
         chatbox.userinput.data = ''
+        print(assetlist)
+        print('getting to the bottom')
 
-    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage)
+    elif undobutton.validate_on_submit():
+        #print('undo is executing again')
+
+        if session['i'] == 1:
+            assetlist.pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 2:
+            print('executing undo 2')
+            assetlist.pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 3:
+            print('undo 3 is executing')
+            assetlist.pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 5:
+            assetlist[-1].pop(-1)
+            imagecount += -1
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 6:
+            assetlist[-1].pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 7:
+            assetlist[-1].pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+        elif session['i'] == 8:
+            if assetlist[-1][1] == "no file uploaded":
+                assetlist[-1].pop(-1)
+                session['i'] = 3
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                print(assetlist)
+            else:
+                assetlist[-1].pop(-1)
+                session['i'] += -1
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                print(assetlist)
+
+        elif session['i'] == 9:
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            print(assetlist)
+
+    print('nearly there')
+    return render_template('chat.html', chatbox = chatbox, errormessage = errormessage, undobutton = undobutton, mainchat = True)
 
 @app.route('/yourwebsite')
 def yourwebsite():
