@@ -41,14 +41,18 @@ def helpdocs(whichclass):
         paragraph, you will have the chance to do so after submitting
         the current paragraph.'''
 
+    elif whichclass == "<class 'forms.AddImage'>":
+        helpdoc = '''Here, if you choose to add an image, you will then
+        have the option to upload one from your computer. You will also
+        have to answer questions on its positioning and size, as well as
+        entering a description of the image to be used by screen
+        readers, in the interest of accessibility.'''
+
     elif whichclass == "<class 'forms.PageImage'>":
         helpdoc = '''Here, you can upload an image from your computer’s
         file storage. It must be in .jpg or .jpeg format. It will be
         placed alongside the paragraph that you just uploaded in the
-        prior step. This step is optional. If you choose to upload an
-        image, you will have to answer questions on its positioning and
-        size, as well as entering a description of the image to be used
-        by screen readers, in the interest of accessibility.'''
+        prior step.'''
 
     elif whichclass == "<class 'forms.AltText'>":
         helpdoc = '''Here, you must enter a description of the image you

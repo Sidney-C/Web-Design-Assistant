@@ -32,6 +32,12 @@
 					<button type="button" class="btn btn-primary btn-sm help-button">Get Help</button>
 				</a>
 			</form>
+			<form method='POST' class="mainform" enctype="multipart/form-data">
+				{%if mainchat%}
+					{{undobutton.hidden_tag()}}
+					{{undobutton.submit(class="btn btn-primary custom-submit")}}
+				{%endif%}
+			</form>
 		</div>
 	</body>
 </html>
