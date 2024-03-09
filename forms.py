@@ -13,6 +13,9 @@ pageimagetext = '''Select and upload an image from your computer using the "Brow
 alttexttext = '''Enter a text description of the image, so that the page is accessible to people using screen readers.'''
 imagepositiontext = '''Choose where you would like the image to be placed in relation to the current paragraph of text.'''
 imagesizetext = '''Choose a size for the image, or select auto if you would like it to remain the size it currently is on your computer.'''
+addlinktext = '''Would you like to include a link to another page or an external website in this section?'''
+linkdestinationtext = '''Enter the address of the page you would like to link to.'''
+linktexttext = '''Enter the text of the link for the user to see.'''
 newsectiontext = '''Would you like to add another section to your page?'''
 addtonavbartext = '''Would you like to add a link to this page to the navigation bar at the top of the site?'''
 
@@ -54,6 +57,18 @@ class ImagePosition(FlaskForm):
 
 class ImageSize(FlaskForm):
     userinput = RadioField(imagesizetext, choices = [('Extra Small', 'Extra Small'), ('Small', 'Small'), ('Medium', 'Medium'), ('Large', 'Large'), ('Extra Large', 'Extra Large'), ('Auto', 'Auto')])
+    submit = SubmitField(submittext)
+
+class AddLink(FlaskForm):
+    userinput = RadioField(addlinktext, choices = [('Yes', 'Yes'), ('No', 'No')])
+    submit = SubmitField(submittext)
+
+class LinkDestination(FlaskForm):
+    userinput = StringField(linkdestinationtext, [validators.DataRequired()])
+    submit = SubmitField(submittext)
+
+class LinkText(FlaskForm):
+    userinput = StringField(linktexttext, [validators.DataRequired()])
     submit = SubmitField(submittext)
     
 class NewSection(FlaskForm):

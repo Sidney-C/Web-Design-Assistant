@@ -94,18 +94,25 @@
 								</div>
 							{%endif%}
 						{%endif%}
+						{%if not currentassets[i][-1] == "No Link"%}
+							{%if websitetheme == 'Dark'%}
+								<a href='https://www.{{currentassets[i][-2]}}' target='_blank' style="color: #c7ebff;">{{currentassets[i][-1]}}</a>
+							{%else%}
+								<a href='https://www.{{currentassets[i][-2]}}' target='_blank'>{{currentassets[i][-1]}}</a>
+							{%endif%}
+						{%endif%}
 					{%endfor%}
 				</div>
 				<br>
 				<div class="container-sm links-yourwebsite">
 					{%if websitetheme == 'Dark'%}
-						<a href='{{url_for('showsource')}}' target='_blank' style="color: #c7ebff;">Get instructions to view and save source code</a>
+						<a href="{{url_for('showsource')}}" target='_blank' style="color: #c7ebff;">Get instructions to view and save source code</a>
 						<br>
-						<a href='{{url_for('chat')}}' target='_blank' style="color: #c7ebff;">Return to form and add another page</a>
+						<a href="{{url_for('chat')}}" target='_blank' style="color: #c7ebff;">Return to form and add another page</a>
 					{%else%}
-						<a href='{{url_for('showsource')}}' target='_blank'>Get instructions to view and save source code</a>
+						<a href="{{url_for('showsource')}}" target='_blank'>Get instructions to view and save source code</a>
 						<br>
-						<a href='{{url_for('chat')}}' target='_blank'>Return to form and add another page</a>
+						<a href="{{url_for('chat')}}" target='_blank'>Return to form and add another page</a>
 					{%endif%}
 					<br>
 					<br>
