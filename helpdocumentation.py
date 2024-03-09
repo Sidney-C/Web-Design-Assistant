@@ -78,12 +78,28 @@ def helpdocs(whichclass):
         sizes automatically update the image's height proportionate to
         its width, so your image will never look distorted.'''
 
+    elif whichclass == "<class 'forms.AddLink'>":
+        helpdoc = '''Here, choose whether or not to add a hyperlink to
+        the bottom of this section. If you choose to do so, you will
+        then be prompted to enter the address of the link, and the
+        clickable text.'''
+
+    elif whichclass == "<class 'forms.LinkDestination'>":
+        helpdoc = '''Here, enter the web address to which you want the
+        link to point (e.g. example.com). If even one character is off,
+        the link will not work or will point to the wrong website, so I
+        strongly recommend copy-pasting it.'''
+
+    elif whichclass == "<class 'forms.LinkText'>":
+        helpdoc = '''Here, enter the text you want displayed on screen
+        for the user to click (e.g. "My social media account").'''
+
     elif whichclass == "<class 'forms.NewSection'>":
         helpdoc = '''Here, you can choose to add a new paragraph to your
         website. If you choose to do so, you will repeat the previous
-        two steps (adding text and then adding an image), before being
-        given a chance to add yet another paragraph, or proceed to the
-        next step if you are done with the current page.'''
+        steps (adding text, and an image and a link if desired), before
+        being given a chance to add yet another paragraph, or proceed to
+        the next step if you are done with the current page.'''
 
     elif whichclass == "<class 'forms.AddToNavbar'>":
         helpdoc = '''Here, you can choose whether or not to add a link

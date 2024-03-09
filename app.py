@@ -17,7 +17,7 @@ assetlist = []
 imagecount = 1
 navbarlinks = {}
 sitenames = []
-formfields = [PageName, URLName, PageText, AddImage, PageImage, AltText, ImagePosition, ImageSize, NewSection, AddToNavbar]
+formfields = [PageName, URLName, PageText, AddImage, PageImage, AltText, ImagePosition, ImageSize, AddLink, LinkDestination, LinkText, NewSection, AddToNavbar]
 starterfields = [WebsiteName, WebsiteTheme]
 starterassets = []
 websitename = ''
@@ -195,6 +195,17 @@ def chat():
                 assetlist[-1].append(size)
 
         if session['i'] == 8:
+            if chatbox.userinput.data == 'No':
+                assetlist[-1].append("No Link")
+                increasei = False
+
+        if session['i'] == 9:
+            assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 10:
+            assetlist[-1].append(chatbox.userinput.data)
+
+        if session['i'] == 11:
             assetlist.append(chatbox.userinput.data)
             
             if chatbox.userinput.data == 'Yes':
@@ -204,7 +215,7 @@ def chat():
                 session['stopnum'] = stopnum
             assetlist.pop(-1)
 
-        if session['i'] == 9:
+        if session['i'] == 12:
             if chatbox.userinput.data == 'Yes':
                 navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
                 sitenames.append(assetlist[0])
@@ -212,7 +223,9 @@ def chat():
         if increasei:
             session['i'] += 1
         else:
-            if assetlist[-1][-1] == "no file uploaded":
+            if session['i'] == 8:
+                session['i'] = 11
+            elif assetlist[-1][-1] == "no file uploaded":
                 session['i'] = 8
             else:
                 session['i'] = 3
@@ -241,12 +254,18 @@ def chat():
             mainchat = False
 
         elif session['i'] == 2:
-            assetlist.pop(-1)
-            session['i'] += -1
-            chatbox.userinput.data = ''
-            chatbox = formfields[session['i']]()
-            mainchat = True
-
+            if len(assetlist) == 2:
+                assetlist.pop(-1)
+                session['i'] += -1
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                mainchat = True
+            else:
+                session['i'] = 11
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                mainchat = True
+                
         elif session['i'] == 3:
             assetlist.pop(-1)
             session['i'] += -1
@@ -277,7 +296,7 @@ def chat():
             mainchat = True
 
         elif session['i'] == 8:
-            if assetlist[-1][1] == "no file uploaded":
+            if assetlist[-1][-1] == "no file uploaded":
                 assetlist[-1].pop(-1)
                 session['i'] = 3
                 chatbox.userinput.data = ''
@@ -291,6 +310,39 @@ def chat():
                 mainchat = True
 
         elif session['i'] == 9:
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            mainchat = True
+
+        elif session['i'] == 10:
+            assetlist[-1].pop(-1)
+            session['i'] += -1
+            chatbox.userinput.data = ''
+            chatbox = formfields[session['i']]()
+            mainchat = True
+
+        elif session['i'] == 11:
+            if assetlist[-1][-1] == "no file uploaded":
+                assetlist[-1].pop(-1)
+                session['i'] = 3
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                mainchat = True
+            elif assetlist[-1][-1] == "No Link":
+                assetlist[-1].pop(-1)
+                session['i'] = 8
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                mainchat = True
+            else:
+                assetlist[-1].pop(-1)
+                session['i'] += -1
+                chatbox.userinput.data = ''
+                chatbox = formfields[session['i']]()
+                mainchat = True
+
+        elif session['i'] == 12:
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
