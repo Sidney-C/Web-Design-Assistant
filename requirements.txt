@@ -2,3 +2,4 @@ Flask==2.0.1
 Flask-WTF==0.15.1
 user-agents==2.2
 gunicorn==21.2.0
+Werkzeug==2.3.7
