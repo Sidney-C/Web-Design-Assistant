@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
-app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg'}
+app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png'}
 app.config['UPLOAD_FOLDER'] = 'static'
 
 allassets = {}
@@ -37,6 +37,35 @@ def landingpage():
 @app.route('/welcome', methods = ['GET', 'POST'])
 def welcome():
 
+
+    global allassets
+    global assetlist
+    global imagecount
+    global navbarlinks
+    global sitenames
+    global formfields
+    global starterfields
+    global starterassets
+    global websitename
+    global websitetheme
+    global stopnum
+    global chatbox
+    global errormessage
+    
+    allassets = {}
+    assetlist = []
+    imagecount = 1
+    navbarlinks = {}
+    sitenames = []
+    formfields = [PageName, URLName, PageText, AddImage, PageImage, AltText, ImagePosition, ImageSize, AddLink, LinkDestination, LinkText, NewSection, AddToNavbar]
+    starterfields = [WebsiteName, WebsiteTheme]
+    starterassets = []
+    websitename = ''
+    websitetheme = ''
+    stopnum = 0
+    chatbox = ''
+    errormessage = ''
+
     launchapp = LaunchApp()
 
     if launchapp.validate_on_submit():
@@ -50,10 +79,12 @@ def choosename():
     global websitename
     global chatbox
 
+    session['isname'] = True
+
     chatbox = WebsiteName()
 
     if chatbox.validate_on_submit():
-        websitename = chatbox.userinput.data
+        session['websitename'] = chatbox.userinput.data
         chatbox.userinput.data = ''
         return redirect(url_for('choosetheme'))
 
@@ -65,10 +96,13 @@ def choosetheme():
     global websitetheme
     global chatbox
 
+    session['isname'] = False
+    session['istheme'] = True
+
     chatbox = WebsiteTheme()
 
     if chatbox.validate_on_submit():
-        websitetheme = chatbox.userinput.data
+        session['websitetheme'] = chatbox.userinput.data
         chatbox.userinput.data = ''
         return redirect(url_for('chat'))
 
@@ -85,11 +119,29 @@ def chat():
     global chatbox
     global errormessage
 
+    mainchat = False
+    session['istheme'] = False
+
     if 'i' not in session:
         session['i'] = 0
         
-    if session['i'] < 1:
-        mainchat = False
+    if session['i'] > 0:
+        mainchat = True
+
+    if 'assetlist' not in session:
+        session['assetlist'] = []
+
+    if 'allassets' not in session:
+        session['allassets'] = {}
+
+    if 'navbarlinks' not in session:
+        session['navbarlinks'] = {}
+
+    if 'sitenames' not in session:
+        session['sitenames'] = []
+
+    if 'imagecount' not in session:
+        session['imagecount'] = 0
 
     increasei = True
 
@@ -100,29 +152,35 @@ def chat():
 
         if session['i'] == 0:
 
-            errormessage = ''
-            
-            if allassets:
-                for j in allassets:
+            session['assetlist'].append(chatbox.userinput.data)
 
-                    if allassets[j][0] == chatbox.userinput.data:
-                        errormessage = 'ERROR: Name already in use. Choose another name.'
-                        chatbox.userinput.data = ''
-                        session['i'] = -1
-                    else:
-                        assetlist.append(chatbox.userinput.data)
-            else:
-                assetlist.append(chatbox.userinput.data)
+            #errormessage = ''
+            
+            #if session['allassets']:
+                #for j in session['allassets']:
+
+                    #if session['allassets'][j][0] == chatbox.userinput.data:
+                        #errormessage = 'ERROR: Name already in use. Choose another name.'
+                        #chatbox.userinput.data = ''
+                        #session['i'] = -1
+                        
+                #session['assetlist'].append(chatbox.userinput.data)
+                #print("adding once")
+
+            #else:
+                #session['assetlist'].append(chatbox.userinput.data)
+                #print("adding twice")
             
             
         if session['i'] == 1:
-
+            
+            print(assetlist)
             errormessage = ''
             doappend = True
 
-            for j in allassets:
+            for j in session['allassets']:
                 
-                if allassets[j][1] == chatbox.userinput.data:
+                if session['allassets'][j][1] == chatbox.userinput.data:
                     errormessage = 'ERROR: URL already in use. Choose another URL.'
                     chatbox.userinput.data = ''
                     session['i'] = 0
@@ -140,44 +198,50 @@ def chat():
                                 doappend = False
 
             if doappend == True:
-                assetlist.append(chatbox.userinput.data)
+                session['assetlist'].append(chatbox.userinput.data)
 
         if session['i'] == 2:
-            assetlist.append([chatbox.userinput.data])
+            print(assetlist)
+            session['assetlist'].append([chatbox.userinput.data])
 
         if session['i'] == 3:
+            print(assetlist)
             if chatbox.userinput.data == 'No':
-                assetlist[-1].append("no file uploaded")
+                session['assetlist'][-1].append("no file uploaded")
                 increasei = False
 
         if session['i'] == 4:
+            print(assetlist)
             if chatbox.userinput.data and checkextension(chatbox.userinput.data.filename):
                 session['image'] = chatbox.userinput.data.filename
             else:
                 session['image'] = None
             if session['image']:
-                filename = 'user_image' + str(imagecount)
-                imagecount += 1
+                filename = 'user_image' + str(session['imagecount'])
+                session['imagecount'] += 1
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 chatbox.userinput.data.save(filepath)
-                assetlist[-1].append(filename)
+                session['assetlist'][-1].append(filename)
                 chatbox.userinput.data = ''
                 session.pop('image', None)
             else:
-                assetlist[-1].append("repeat")
+                session['assetlist'][-1].append("repeat")
                 chatbox.userinput.data = ''
                 session.pop('image', None)
                 increasei = False
                 
         if session['i'] == 5:
+            print(assetlist)
             if chatbox.validate_on_submit():
-                assetlist[-1].append(chatbox.userinput.data)
+                session['assetlist'][-1].append(chatbox.userinput.data)
 
         if session['i'] == 6:
+            print(assetlist)
             if chatbox.validate_on_submit():
-                assetlist[-1].append(chatbox.userinput.data)
+                session['assetlist'][-1].append(chatbox.userinput.data)
 
         if session['i'] == 7:
+            print(assetlist)
             if chatbox.validate_on_submit():
                 size = chatbox.userinput.data
                 if size == 'Extra Small':
@@ -192,50 +256,55 @@ def chat():
                     size = 'height: auto; width: 900px'
                 elif size == 'Auto':
                     size = ''
-                assetlist[-1].append(size)
+                session['assetlist'][-1].append(size)
 
         if session['i'] == 8:
+            print(assetlist)
             if chatbox.userinput.data == 'No':
-                assetlist[-1].append("No Link")
+                session['assetlist'][-1].append("No Link")
                 increasei = False
 
         if session['i'] == 9:
-            assetlist[-1].append(chatbox.userinput.data)
+            print(assetlist)
+            session['assetlist'][-1].append(chatbox.userinput.data)
 
         if session['i'] == 10:
-            assetlist[-1].append(chatbox.userinput.data)
+            print(assetlist)
+            session['assetlist'][-1].append(chatbox.userinput.data)
 
         if session['i'] == 11:
-            assetlist.append(chatbox.userinput.data)
+            print(assetlist)
+            session['assetlist'].append(chatbox.userinput.data)
             
             if chatbox.userinput.data == 'Yes':
                 session['i'] = 1
             else:
-                stopnum = assetlist.index('No', -1)
+                stopnum = session['assetlist'].index('No', -1)
                 session['stopnum'] = stopnum
-            assetlist.pop(-1)
+            session['assetlist'].pop(-1)
 
         if session['i'] == 12:
+            print(assetlist)
             if chatbox.userinput.data == 'Yes':
-                navbarlinks[assetlist[0]] = (url_for('currentpage', currenturl=assetlist[1]))
-                sitenames.append(assetlist[0])
+                session['navbarlinks'][session['assetlist'][0]] = (url_for('currentpage', currenturl=session['assetlist'][1]))
+                session['sitenames'].append(session['assetlist'][0])
 
         if increasei:
             session['i'] += 1
         else:
             if session['i'] == 8:
                 session['i'] = 11
-            elif assetlist[-1][-1] == "no file uploaded":
+            elif session['assetlist'][-1][-1] == "no file uploaded":
                 session['i'] = 8
             else:
                 session['i'] = 3
-                assetlist[-1].pop(-1)
+                session['assetlist'][-1].pop(-1)
         
         if session['i'] == len(formfields):
-            assetlist.append(session['stopnum'])
-            allassets[assetlist[1]] = assetlist
-            currenturl = assetlist[1]
-            assetlist = []
+            session['assetlist'].append(session['stopnum'])
+            session['allassets'][session['assetlist'][1]] = session['assetlist']
+            currenturl = session['assetlist'][1]
+            session['assetlist'] = []
             session.pop('i', None)
             return redirect(url_for('currentpage', currenturl = currenturl))
         
@@ -247,15 +316,15 @@ def chat():
     elif undobutton.validate_on_submit():
 
         if session['i'] == 1:
-            assetlist.pop(-1)
+            session['assetlist'].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
             mainchat = False
 
         elif session['i'] == 2:
-            if len(assetlist) == 2:
-                assetlist.pop(-1)
+            if len(session['assetlist']) == 2:
+                session['assetlist'].pop(-1)
                 session['i'] += -1
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
@@ -267,14 +336,14 @@ def chat():
                 mainchat = True
                 
         elif session['i'] == 3:
-            assetlist.pop(-1)
+            session['assetlist'].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
             mainchat = True
 
         elif session['i'] == 5:
-            assetlist[-1].pop(-1)
+            session['assetlist'][-1].pop(-1)
             imagecount += -1
             session['i'] += -1
             chatbox.userinput.data = ''
@@ -282,28 +351,28 @@ def chat():
             mainchat = True
 
         elif session['i'] == 6:
-            assetlist[-1].pop(-1)
+            session['assetlist'][-1].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
             mainchat = True
 
         elif session['i'] == 7:
-            assetlist[-1].pop(-1)
+            session['assetlist'][-1].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
             mainchat = True
 
         elif session['i'] == 8:
-            if assetlist[-1][-1] == "no file uploaded":
-                assetlist[-1].pop(-1)
+            if session['assetlist'][-1][-1] == "no file uploaded":
+                session['assetlist'][-1].pop(-1)
                 session['i'] = 3
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
                 mainchat = True
             else:
-                assetlist[-1].pop(-1)
+                session['assetlist'][-1].pop(-1)
                 session['i'] += -1
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
@@ -316,27 +385,27 @@ def chat():
             mainchat = True
 
         elif session['i'] == 10:
-            assetlist[-1].pop(-1)
+            session['assetlist'][-1].pop(-1)
             session['i'] += -1
             chatbox.userinput.data = ''
             chatbox = formfields[session['i']]()
             mainchat = True
 
         elif session['i'] == 11:
-            if assetlist[-1][-1] == "no file uploaded":
-                assetlist[-1].pop(-1)
+            if session['assetlist'][-1][-1] == "no file uploaded":
+                session['assetlist'][-1].pop(-1)
                 session['i'] = 3
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
                 mainchat = True
-            elif assetlist[-1][-1] == "No Link":
-                assetlist[-1].pop(-1)
+            elif session['assetlist'][-1][-1] == "No Link":
+                session['assetlist'][-1].pop(-1)
                 session['i'] = 8
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
                 mainchat = True
             else:
-                assetlist[-1].pop(-1)
+                session['assetlist'][-1].pop(-1)
                 session['i'] += -1
                 chatbox.userinput.data = ''
                 chatbox = formfields[session['i']]()
@@ -360,10 +429,12 @@ def yourwebsite():
 @app.route('/yourwebsite/<currenturl>')
 def currentpage(currenturl):
 
-    currentassets = allassets[currenturl]
-    stopnum = currentassets[-1]
+    print(allassets)
+    session['currentassets'] = session['allassets'][currenturl]
+    session['stophere'] = session['currentassets'][-1]
+    print(session['currentassets'])
     
-    return render_template('yourwebsite.html', websitename = websitename, websitetheme = websitetheme, currentassets = currentassets, stopnum = stopnum, navbarlinks = navbarlinks, sitenames = sitenames)
+    return render_template('yourwebsite.html', websitename = session['websitename'], websitetheme = session['websitetheme'], currentassets = session['currentassets'], stopnum = session['stophere'], navbarlinks = session['navbarlinks'], sitenames = session['sitenames'])
 
 @app.route('/showsource')
 def showsource():
@@ -377,7 +448,16 @@ def showsource():
 @app.route('/help')
 def help():
 
-    helpdoc = helpdocs(str(chatbox.__class__))
+    whichclass = 0
+
+    if session['isname'] == True:
+        whichclass = 111
+    elif session['istheme'] == True:
+        whichclass = 999
+    else:
+        whichclass = session['i']
+
+    helpdoc = helpdocs(whichclass)
 
     return render_template('help.html', helpdoc = helpdoc)
 
