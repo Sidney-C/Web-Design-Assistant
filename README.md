@@ -1,2 +1,2 @@
 # Web-Design-Chatbot
-The web design chatbot
+The web design assistant
